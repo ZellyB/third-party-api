@@ -1,3 +1,4 @@
+
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
@@ -21,3 +22,41 @@ $(function () {
   //
   // TODO: Add code to display the current date in the header of the page.
 });
+var currentTime = moment();
+$("#currentDay").text(currentTime.format("MM/DD/YY"));
+var currentHour = moment().hours()
+console.log(currentHour)
+var saved = document.getElementById("fas fa-save");
+var textarea = document.getElementById("textarea");
+var button = document.querySelector(".saveBtn")
+
+ //
+
+$(".time-block").each(function(hour) {
+  var hourKey = parseInt($(this).attr("id").split("-")[1])
+  if(hourKey < currentHour) {
+    $(this).children(".description").addClass("past")
+  } else if (hourKey === currentHour) {
+    $(this).children(".description").addClass("present")
+  } else {
+    $(this).children(".description").addClass("future")
+  }
+})
+ 
+var displayTime = document.querySelector("#currentDay");
+
+
+
+$(".saveBtn").on("click", function() {
+  var value = $(this).siblings(".description").val();
+  var time = $(this).parent().attr("id");
+  console.log(value, time)
+  localStorage.setItem(time, value);
+})
+  
+
+
+
+for (var i = 9; i < 18; i++) {
+  $(`#hour-${i} .description`).val(localStorage.getItem(`hour-${i}`)) 
+}
